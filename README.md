@@ -102,7 +102,7 @@ python manage.py runserver
 ## How to Run the Redis Server
 Go to the link and download Redis-x64-3.0.504.zip
 eg. [click here](https://github.com/microsoftarchive/redis/releases)
-unzip the file and redis-server.exe file
+unzip the file and run the redis-server.exe file
 
 ## Go to the url
 Access it at: http://localhost:8000/
