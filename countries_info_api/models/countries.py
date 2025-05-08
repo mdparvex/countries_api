@@ -60,13 +60,12 @@ class CountryDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Country
         fields = [
-            'name', 'tld', 'cca2', 'ccn3', 'cca3', 'cioc', 'independent',
+            'name', 'tld', 'cca2', 'ccn3', 'cioc', 'independent',
             'status', 'un_member', 'currencies', 'idd', 'capital',
-            'altSpellings', 'region', 'sub_region', 'languages', 'translations',
-            'latlng', 'landlocked', 'area', 'flag', 'demonyms', 'maps',
+            'altSpellings', 'region', 'sub_region', 'languages','latlng', 'landlocked', 
+            'borders', 'area', 'demonyms','cca3','translations', 'flag', 'maps',
             'population', 'gini', 'fifa', 'car', 'timezones', 'continents',
-            'flags', 'coatOfArms', 'startOfWeek', 'capitalInfo', 'postalCode',
-            'borders'
+            'flags', 'coatOfArms', 'startOfWeek', 'capitalInfo', 'postalCode'
         ]
 
     def get_capital(self, obj):
@@ -124,4 +123,25 @@ class CountryDetailsSerializer(serializers.ModelSerializer):
 
     def get_continents(self, obj):
         return [c.name for c in obj.continents.all()]
+    
+class CountrySerializer(serializers.ModelSerializer):
+    capital = serializers.SerializerMethodField()
+    timezones = serializers.SerializerMethodField()
+    languages = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Country
+        fields = ['country_id','name', 'cca2', 'capital', 'population', 'timezones', 'flag', 'languages']
+
+    def get_capital(self, obj):
+        return [cap.name for cap in obj.capitals.all()]
+    def get_timezones(self, obj):
+        return [tz.zone for tz in obj.timezones.all()]
+    def get_languages(self, obj):
+        return {lang.code: lang.name for lang in obj.language.all()}
+    
+class CountryCreateUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Country
+        fields = '__all__'
     
