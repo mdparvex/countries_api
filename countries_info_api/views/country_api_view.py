@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.authentication import IsAuthenticated
-from rest_framework.decorators import api_view, authentication_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes
 from django.http import JsonResponse
 from rest_framework import status
 from django.core.cache import cache
@@ -91,7 +91,7 @@ class CountryAPIView(APIView):
 
 
 @api_view(['GET'])
-@authentication_classes((IsAuthenticated,))
+@permission_classes((IsAuthenticated,))
 def get_all_country_list(request):
     content = {}
     cache_key = "all_country_list_"
@@ -110,7 +110,7 @@ def get_all_country_list(request):
     return JsonResponse(content, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
-@authentication_classes((IsAuthenticated,))
+@permission_classes((IsAuthenticated,))
 def same_regional_country_list(request, country_id):
     content = {
         "status": 0
@@ -128,7 +128,7 @@ def same_regional_country_list(request, country_id):
     return JsonResponse(content, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
-@authentication_classes((IsAuthenticated,))
+@permission_classes((IsAuthenticated,))
 def search_country(request):
     content = {
         "status": 0
@@ -148,7 +148,7 @@ def search_country(request):
     return JsonResponse(content, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
-@authentication_classes((IsAuthenticated,))
+@permission_classes((IsAuthenticated,))
 def countries_same_language(request):
     content = {
         "status": 0
