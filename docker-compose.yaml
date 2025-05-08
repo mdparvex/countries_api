@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:17
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - .env
+
+  django-web:
+    build: .
+    container_name: django-docker
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - ./static:/app/staticfiles
+    env_file:
+      - .env
+    ports:
+      - "8001:8000"
+
+  redis:
+    image: redis:6.2-alpine
+    volumes:
+      - .redis.conf/redis.conf:/usr/local/etc/redis.conf/redis.conf
+    #command: [sh, -c, "rm -f /data/dump.rdb && redis-server", "redis-server --appendonly yes --replica-read-only no"]
+    command: redis-server /usr/local/etc/redis.conf/redis.conf
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
