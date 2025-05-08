@@ -14,4 +14,6 @@ urlpatterns = [
 
  #paths to display all data
  path('display-countries/', country_list_view, name='country_list'),
+ path('', login, name='login_page'),
+ path('signup/', signup, name='signup_page'),
 ]
