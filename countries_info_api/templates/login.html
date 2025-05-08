@@ -28,7 +28,6 @@
 <script>
     const redirectUrl = "{% url 'country_list' %}";
 
-    // ✅ Auto-redirect if token exists
     if (localStorage.getItem("token")) {
         window.location.href = redirectUrl;
     }
