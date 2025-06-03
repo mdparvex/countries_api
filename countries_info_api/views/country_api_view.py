@@ -1,20 +1,26 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, throttle_classes
 from django.http import JsonResponse
 from rest_framework import status
 from django.core.cache import cache
 from django.db.models.expressions import RawSQL
 from ..models.countries import Country, CountrySerializer, CountryCreateUpdateSerializer
 from ..models.regions import Region
-from rest_framework.throttling import ScopedRateThrottle
+from ..funtions.throttl import TeacherUserThrottle
 
 CACHE_TTL = 60 * 10
 
 class CountryAPIView(APIView):
     permission_classes = [IsAuthenticated]
     throttle_scope = 'country'
+
+    def throttle_failure_view(self, request):
+        return Response(
+            {"error": "You have exceeded your request limit. Please try again later."},
+            status=status.HTTP_429_TOO_MANY_REQUESTS
+        )
     
     def get(self, request):
         content = {
@@ -94,6 +100,7 @@ class CountryAPIView(APIView):
 
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
+@throttle_classes([TeacherUserThrottle])
 def get_all_country_list(request):
     content = {}
     cache_key = "all_country_list_"
@@ -113,6 +120,7 @@ def get_all_country_list(request):
 
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
+@throttle_classes([TeacherUserThrottle])
 def same_regional_country_list(request, country_id):
     content = {
         "status": 0
