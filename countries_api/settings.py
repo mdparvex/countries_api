@@ -129,14 +129,29 @@ if DB_IS_AVAIL:
             'PORT': DATABASE_PORT,
         }
     }
-
+if DOCKER_READY:
+    REDIS_LOCATION = os.getenv('REDIS_LOCATION_DOCKER')
+else:
+    REDIS_LOCATION = os.getenv('REDIS_LOCATION')
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": os.getenv('REDIS_LOCATION'),
+        "LOCATION": REDIS_LOCATION,
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient"
         },
+    }
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '10/minute',  # 10 requests per minute for unauthenticated users
+        'user': '100/day',    # 100 requests per day for authenticated users
+        'couuntry': '50/day', #this is for specefic api
     }
 }
 # Password validation
