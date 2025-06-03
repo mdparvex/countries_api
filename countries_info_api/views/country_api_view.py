@@ -8,11 +8,13 @@ from django.core.cache import cache
 from django.db.models.expressions import RawSQL
 from ..models.countries import Country, CountrySerializer, CountryCreateUpdateSerializer
 from ..models.regions import Region
+from rest_framework.throttling import ScopedRateThrottle
 
 CACHE_TTL = 60 * 10
 
 class CountryAPIView(APIView):
     permission_classes = [IsAuthenticated]
+    throttle_scope = 'country'
     
     def get(self, request):
         content = {

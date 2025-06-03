@@ -3,11 +3,13 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.core.cache import cache
 from ..models.countries import Country, CountryDetailsSerializer
+from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
 
 CACHE_TTL = 60 * 10
 
 class CountryListDetailsAPIView(APIView):
     permission_classes = [IsAuthenticated]
+    throttle_classes = [AnonRateThrottle, UserRateThrottle] #global throtolling
 
     def get(self, request):
         cache_key = "all_country_list_with details"
