@@ -1,28 +1,28 @@
-# Country data From restcountry API
+# Country data from the restcountry API
 This project involves fetching data from an external API, formatting the data, and
- making it available via RESTful APIs. The data display on a simple, secured
+ making it available via RESTful APIs. The data is displayed on a simple, secure
  web page where users can find information about different countries.
 
 ## Project Description
 
-This Django project interact with restcountry api to get country data and Make API for modification:
+This Django project interacts with the restcountry api to get country data and makes API for modification:
 
 - Data Fetching and Storage
-- Restrict API access to authenticated users.
+- Restrict API access to unauthenticated users.
 - RESTful API Development
 - List all countries.
 - Retrieve details of a specific country.
 - Create a new country entry.
 - Update an existing country’s details.
 - Delete an existing country.
-- List same regional countries of a specific country.
+- List the same regional countries of a specific country.
 - List countries that speak the same language based on a given language.
 - Search for a country by its name (supports partial search).
 - Implemented a login page for registered users to access the country list page.
 - Used REST API consumption for data display.
 - Displayed a table with country details: name, cca2, capital, population, timezone, and flag.
 - Included a search field for searching a country by name.
-- Implemented a ”Details” button to show same regional countries and spoken languages.
+- Implemented a ”Details” button to show the same regional countries and spoken languages.
 - Used Bootstrap or Bulma for styling.
 
 
