@@ -1,5 +1,5 @@
 # Country data from the restcountry API
-This project involves fetching data from an external API, formatting the data, and
+This project involves fetching data from an external API, formatting the data, designing and migrating it to the database, and
  making it available via RESTful APIs. The data is displayed on a simple, secure
  web page where users can find information about different countries.
 
