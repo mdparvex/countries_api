@@ -5,6 +5,9 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from .serializers import UserSignupSerializer
 from rest_framework.permissions import AllowAny
+from rest_framework.decorators import api_view
+from django.contrib.auth.models import User
+from django.http import JsonResponse
 
 class SignupView(APIView):
     permission_classes = [AllowAny]
@@ -26,3 +29,10 @@ class LoginView(APIView):
             token, _ = Token.objects.get_or_create(user=user)
             return Response({"token": token.key})
         return Response({"detail": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+    
+#create super user
+@api_view(['GET'])
+def create_superuser(request):
+    User.objects.create_superuser('admin', 'admin@example.com', '12345678')
+
+    return JsonResponse({'massege': 'ok'}, status=status.HTTP_200_OK)

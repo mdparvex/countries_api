@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     #local
     'countries_info_api',
     'users',
+    'graphql_api',
+    'graphene_django',
 ]
 
 REST_FRAMEWORK = {

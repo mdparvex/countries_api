@@ -1,5 +1,6 @@
 from django.db import models
 from rest_framework import serializers
+import json
 from django.contrib.postgres.fields import ArrayField
 from .regions import Region
 from .subregions import SubRegion
@@ -42,7 +43,7 @@ class Country(models.Model):
     postalCode = models.JSONField(default=dict)
 
     def __str__(self):
-        return self.name.get('common', self.cca2)
+        return self.name.get('common', self.cca2) if isinstance(self.name, dict) else self.cca2
     
 class CountryDetailsSerializer(serializers.ModelSerializer):
     borders = serializers.SerializerMethodField()
